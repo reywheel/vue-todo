@@ -15,8 +15,11 @@
 						placeholder="Пароль"
 						class="input"
 						v-model="password"
+						show-password
 					></el-input>
-					<el-button type="success" native-type="submit">Войти</el-button>
+					<el-button type="success" native-type="submit" :loading="isSubmitting"
+						>Войти
+					</el-button>
 				</form>
 			</el-card>
 		</el-col>
@@ -24,6 +27,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { getterTypes, actionTypes } from '@/store/auth'
+
 export default {
 	name: 'login',
 	data() {
@@ -32,9 +38,25 @@ export default {
 			password: '',
 		}
 	},
+	computed: {
+		...mapGetters({
+			isSubmitting: getterTypes.isSubmitting,
+		}),
+		userCredentials() {
+			return {
+				email: this.email,
+				password: this.password,
+			}
+		},
+	},
 	methods: {
 		submitHandler() {
-			console.log('submit')
+			this.$store
+				.dispatch(actionTypes.login, this.userCredentials)
+				.then(() => {
+					this.$router.push({ name: 'home' })
+				})
+				.catch(() => {})
 		},
 	},
 }

@@ -13,6 +13,8 @@
 <script>
 import AppHeader from '@/components/Header'
 import AppDrawer from '@/components/Drawer'
+import { actionTypes as authActionTypes } from '@/store/auth'
+import { actionTypes as projectsActionTypes } from '@/store/projects'
 
 export default {
 	components: {
@@ -28,6 +30,11 @@ export default {
 		toggleDrawer() {
 			this.drawerIsOpen = !this.drawerIsOpen
 		},
+	},
+	created() {
+		this.$store.dispatch(authActionTypes.getProfile).then(() => {
+			this.$store.dispatch(projectsActionTypes.getProjects)
+		})
 	},
 }
 </script>

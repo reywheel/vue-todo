@@ -20,6 +20,12 @@ const routes = [
 		name: 'register',
 		component: () => import('@/views/Register'),
 	},
+	{
+		path: '/projects/:id',
+		name: 'project',
+		component: () => import('@/views/Project'),
+		props: true,
+	},
 ]
 
 const router = new VueRouter({
