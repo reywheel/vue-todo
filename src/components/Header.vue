@@ -6,8 +6,22 @@
 			@click.prevent="clickHandler"
 		></el-button>
 		<ul class="menu__list">
-			<li class="el-menu-item">Войти</li>
-			<li class="el-menu-item">Зарегистрироваться</li>
+			<router-link
+				tag="li"
+				class="el-menu-item"
+				active-class="is-active"
+				:to="{ name: 'login' }"
+			>
+				Войти
+			</router-link>
+			<router-link
+				tag="li"
+				class="el-menu-item"
+				active-class="is-active"
+				:to="{ name: 'register' }"
+			>
+				Зарегистрироваться
+			</router-link>
 		</ul>
 	</el-row>
 </template>
