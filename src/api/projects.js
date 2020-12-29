@@ -12,8 +12,13 @@ const getProject = (projectId) => {
 	return axios.get(`/projects/${projectId}`)
 }
 
+const deleteProject = (projectId) => {
+	return axios.delete(`/projects/${projectId}`)
+}
+
 export default {
 	getProjects,
 	createProject,
 	getProject,
+	deleteProject,
 }

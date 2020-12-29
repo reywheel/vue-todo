@@ -10,7 +10,12 @@
 						<div class="project__name">
 							<h3>Проект: {{ project.title }}</h3>
 						</div>
-						<el-button type="danger" plain size="small"
+						<el-button
+							type="danger"
+							plain
+							size="small"
+							@click="deleteProject"
+							:loading="isSubmitting"
 							>Удалить проект
 						</el-button>
 					</div>
@@ -35,6 +40,7 @@
 
 <script>
 import { getterTypes, actionTypes } from '@/store/project'
+import { actionTypes as projectsActionTypes } from '@/store/projects'
 import { mapGetters } from 'vuex'
 import Loader from '@/components/Loader'
 import TaskList from '@/components/TaskList'
@@ -76,11 +82,24 @@ export default {
 			project: getterTypes.data,
 			isEmpty: getterTypes.isEmpty,
 			isLoading: getterTypes.isLoading,
+			isSubmitting: getterTypes.isSubmitting,
 		}),
 	},
 	methods: {
 		getProject() {
 			this.$store.dispatch(actionTypes.getProject, { projectId: this.id })
+		},
+		deleteProject() {
+			this.$store
+				.dispatch(actionTypes.deleteProject, { projectId: this.id })
+				.then(() => {
+					this.$store.dispatch(projectsActionTypes.getProjects)
+					this.$message({
+						message: 'Проект был успешно удалён',
+						type: 'success',
+					})
+					this.$router.push({ name: 'home' })
+				})
 		},
 	},
 	watch: {

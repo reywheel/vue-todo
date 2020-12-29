@@ -16,11 +16,16 @@ export const mutationTypes = {
 	getProjectStart: '[project] get project start',
 	getProjectSuccess: '[project] get project success',
 	getProjectFailure: '[project] get project failure',
+
+	deleteProjectStart: '[project] delete project start',
+	deleteProjectSuccess: '[project] delete project success',
+	deleteProjectFailure: '[project] delete project failure',
 }
 
 export const actionTypes = {
 	createProject: '[project] create project',
 	getProject: '[project] get project',
+	deleteProject: '[project] delete project',
 }
 
 const state = {
@@ -66,6 +71,19 @@ const mutations = {
 		state.isLoading = false
 		state.errors = errors
 	},
+
+	[mutationTypes.deleteProjectStart](state) {
+		state.isSubmitting = true
+		state.errors = true
+	},
+	[mutationTypes.deleteProjectSuccess](state) {
+		state.isSubmitting = false
+		state.data = null
+	},
+	[mutationTypes.deleteProjectFailure](state, errors) {
+		state.isSubmitting = false
+		state.errors = errors
+	},
 }
 
 const actions = {
@@ -94,6 +112,20 @@ const actions = {
 				})
 				.catch((e) => {
 					commit(mutationTypes.getProjectFailure, e.response.data)
+				})
+		})
+	},
+	[actionTypes.deleteProject]({ commit }, { projectId }) {
+		return new Promise((resolve) => {
+			commit(mutationTypes.deleteProjectStart)
+			projectsApi
+				.deleteProject(projectId)
+				.then(() => {
+					commit(mutationTypes.deleteProjectSuccess)
+					resolve()
+				})
+				.catch((e) => {
+					commit(mutationTypes.deleteProjectFailure, e.response.data)
 				})
 		})
 	},
