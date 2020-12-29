@@ -22,12 +22,17 @@ export const mutationTypes = {
 	logoutStart: '[auth] logout start',
 	logoutSuccess: '[auth] logout success',
 	logoutFailure: '[auth] logout failure',
+
+	registerStart: '[auth] register start',
+	registerSuccess: '[auth] register success',
+	registerFailure: '[auth] register failure',
 }
 
 export const actionTypes = {
 	login: '[auth] login',
 	getProfile: '[auth] get profile',
 	logout: '[auth] logout',
+	register: '[auth] register',
 }
 
 const state = {
@@ -86,9 +91,40 @@ const mutations = {
 		state.isSubmitting = false
 		state.errors = errors
 	},
+
+	[mutationTypes.registerStart](state) {
+		state.isSubmitting = true
+		state.errors = null
+	},
+	[mutationTypes.registerSuccess](state) {
+		state.isSubmitting = false
+	},
+	[mutationTypes.registerFailure](state, errors) {
+		state.isSubmitting = false
+		state.errors = errors
+	},
 }
 
 const actions = {
+	async [actionTypes.register](
+		{ commit },
+		{ name, email, password, password_confirmation },
+	) {
+		try {
+			commit(mutationTypes.registerStart)
+			const response = await authApi.register({
+				name,
+				email,
+				password,
+				password_confirmation,
+			})
+			commit(mutationTypes.registerSuccess)
+			return Promise.resolve()
+		} catch (e) {
+			commit(mutationTypes.registerFailure, e.response.data)
+			throw e
+		}
+	},
 	async [actionTypes.login]({ commit }, { email, password }) {
 		try {
 			commit(mutationTypes.loginStart)

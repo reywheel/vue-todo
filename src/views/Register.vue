@@ -24,7 +24,9 @@
 						v-model="passwordConfirmation"
 						show-password
 					></el-input>
-					<el-button type="success" native-type="submit">Войти</el-button>
+					<el-button type="success" native-type="submit" :loading="isSubmitting"
+						>Войти</el-button
+					>
 				</form>
 			</el-card>
 		</el-col>
@@ -32,6 +34,9 @@
 </template>
 
 <script>
+import { actionTypes, getterTypes } from '@/store/auth'
+import { mapGetters } from 'vuex'
+
 export default {
 	name: 'login',
 	data() {
@@ -42,9 +47,31 @@ export default {
 			passwordConfirmation: '',
 		}
 	},
+	computed: {
+		...mapGetters({
+			isSubmitting: getterTypes.isSubmitting,
+		}),
+		userCredentials() {
+			return {
+				name: this.name,
+				email: this.email,
+				password: this.password,
+				password_confirmation: this.passwordConfirmation,
+			}
+		},
+	},
 	methods: {
 		submitHandler() {
-			console.log('submit')
+			this.$store
+				.dispatch(actionTypes.register, this.userCredentials)
+				.then(() => {
+					this.$message({
+						message: 'Регистрация прошла успешно',
+						type: 'success',
+					})
+					this.$router.push({ name: 'login' })
+				})
+				.catch(() => {})
 		},
 	},
 }
