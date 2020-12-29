@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import auth from '@/store/auth'
 import projects from '@/store/projects'
 import project from '@/store/project'
+import tasks from '@/store/tasks'
 
 Vue.use(Vuex)
 
@@ -14,5 +15,6 @@ export default new Vuex.Store({
 		auth,
 		projects,
 		project,
+		tasks,
 	},
 })
