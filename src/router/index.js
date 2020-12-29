@@ -24,7 +24,7 @@ const routes = [
 		path: '/projects/:id',
 		name: 'project',
 		component: () => import('@/views/Project'),
-		props: true,
+		props: (route) => ({ id: Number(route.params.id) }),
 	},
 ]
 

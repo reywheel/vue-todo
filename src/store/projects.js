@@ -1,4 +1,5 @@
 import projectsApi from '@/api/projects'
+import { mutationTypes as authMutationTypes } from '@/store/auth'
 
 export const getterTypes = {
 	data: '[projects] data',
@@ -44,6 +45,11 @@ const mutations = {
 	[mutationTypes.getProjectsFailure](state, errors) {
 		state.isLoading = false
 		state.errors = errors
+	},
+
+	[authMutationTypes.logoutSuccess](state) {
+		state.data = null
+		state.errors = null
 	},
 }
 

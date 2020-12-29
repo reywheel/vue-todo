@@ -51,16 +51,13 @@ export default {
 	},
 	methods: {
 		submitHandler() {
-			this.$store
-				.dispatch(actionTypes.login, this.userCredentials)
-				.then(() => {
-					this.$message({
-						message: 'Добро пожаловать',
-						type: 'success',
-					})
-					this.$router.push({ name: 'home' })
+			this.$store.dispatch(actionTypes.login, this.userCredentials).then(() => {
+				this.$message({
+					message: 'Добро пожаловать',
+					type: 'success',
 				})
-				.catch(() => {})
+				this.$router.push({ name: 'home' })
+			})
 		},
 	},
 }

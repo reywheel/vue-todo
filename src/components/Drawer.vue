@@ -25,6 +25,15 @@
 					</router-link>
 				</div>
 			</el-menu>
+			<el-menu>
+				<el-submenu index="1">
+					<template slot="title">
+						<i class="el-icon-plus"></i>
+						<span>Добавить проект</span>
+					</template>
+					<CreateProjectForm @onSubmit="closeHandler" />
+				</el-submenu>
+			</el-menu>
 		</template>
 	</el-drawer>
 </template>
@@ -33,10 +42,12 @@
 import { getterTypes } from '@/store/projects'
 import { mapGetters } from 'vuex'
 import AppLoader from '@/components/Loader'
+import CreateProjectForm from '@/components/CreateProjectForm'
 
 export default {
 	name: 'Drawer',
 	components: {
+		CreateProjectForm,
 		AppLoader,
 	},
 	props: {

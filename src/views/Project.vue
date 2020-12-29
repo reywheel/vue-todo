@@ -8,7 +8,7 @@ export default {
 	props: {
 		id: {
 			required: true,
-			type: [Number, String],
+			type: Number,
 		},
 	},
 }

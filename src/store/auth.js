@@ -129,8 +129,8 @@ const actions = {
 		try {
 			commit(mutationTypes.loginStart)
 			const response = await authApi.login({ email, password })
-			commit(mutationTypes.loginSuccess, response.data.user)
 			token.set(response.data['access_token'])
+			commit(mutationTypes.loginSuccess, response.data.user)
 			return Promise.resolve()
 		} catch (e) {
 			commit(mutationTypes.loginFailure, e.response.data)
@@ -138,14 +138,18 @@ const actions = {
 		}
 	},
 	async [actionTypes.getProfile]({ commit }) {
-		try {
+		return new Promise((resolve) => {
 			commit(mutationTypes.getProfileStart)
-			const response = await authApi.getProfile()
-			commit(mutationTypes.getProfileSuccess, response.data)
-			return Promise.resolve(response.data)
-		} catch (e) {
-			commit(mutationTypes.getProfileFailure, e.response.data)
-		}
+			authApi
+				.getProfile()
+				.then((response) => {
+					commit(mutationTypes.getProfileSuccess, response)
+					resolve()
+				})
+				.catch((e) => {
+					commit(mutationTypes.getProfileFailure, e.response.data)
+				})
+		})
 	},
 	async [actionTypes.logout]({ commit }) {
 		try {
