@@ -77,7 +77,10 @@ export default {
 						message: 'Задача успешно создана',
 						type: 'success',
 					})
-					this.$router.push({ name: 'task', params: { taskId: newTask.id } })
+					this.$router.push({
+						name: 'project',
+						params: { projectId: newTask.project_id },
+					})
 				})
 		},
 		redirectToProject() {

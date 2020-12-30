@@ -54,7 +54,6 @@ const mutations = {
 	[mutationTypes.completeTaskStart]() {},
 	[mutationTypes.completeTaskSuccess](state, taskId) {
 		const index = state.data.findIndex((task) => task.id === taskId)
-		console.log(index)
 		state.data[index].is_done = !state.data[index].is_done
 	},
 	[mutationTypes.completeTaskFailure](state, taskId) {

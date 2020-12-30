@@ -20,12 +20,17 @@ export const mutationTypes = {
 	editTaskStart: '[task] edit task start',
 	editTaskSuccess: '[task] edit task success',
 	editTaskFailure: '[task] edit task failure',
+
+	deleteTaskStart: '[task] delete task start',
+	deleteTaskSuccess: '[task] delete task success',
+	deleteTaskFailure: '[task] delete task failure',
 }
 
 export const actionTypes = {
 	createTask: '[task] create task',
 	getTask: '[task] get task',
 	editTask: '[task] edit task',
+	deleteTask: '[task] delete task',
 }
 
 const state = {
@@ -83,6 +88,19 @@ const mutations = {
 		state.isSubmitting = false
 		state.errors = errors
 	},
+
+	[mutationTypes.deleteTaskStart](state) {
+		state.isSubmitting = true
+		state.errors = null
+	},
+	[mutationTypes.deleteTaskSuccess](state) {
+		state.isSubmitting = false
+		state.data = null
+	},
+	[mutationTypes.deleteTaskFailure](state, errors) {
+		state.isSubmitting = false
+		state.errors = errors
+	},
 }
 
 const actions = {
@@ -128,6 +146,20 @@ const actions = {
 				})
 				.catch((e) => {
 					commit(mutationTypes.editTaskFailure, e.response.data)
+				})
+		})
+	},
+	[actionTypes.deleteTask]({ commit }, { taskId }) {
+		return new Promise((resolve) => {
+			commit(mutationTypes.deleteTaskStart)
+			tasksApi
+				.deleteTask(taskId)
+				.then(() => {
+					commit(mutationTypes.deleteTaskSuccess)
+					resolve()
+				})
+				.catch((e) => {
+					commit(mutationTypes.deleteTaskFailure, e.response.data)
 				})
 		})
 	},

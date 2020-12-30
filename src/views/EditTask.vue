@@ -5,7 +5,7 @@
 		</template>
 		<template v-else>
 			<el-row v-if="!isEmpty">
-				<el-col :offset="9" :md="6" class="col">
+				<el-col :offset="8" :md="8" class="col">
 					<el-card class="box-card card">
 						<div slot="header" class="clearfix card__header">
 							<h3>Редактировать задачу</h3>
@@ -25,16 +25,26 @@
 								placeholder="Дедлайн"
 								class="input"
 							/>
-							<el-button
-								type="success"
-								native-type="submit"
-								:loading="isSubmitting"
-							>
-								Изменить
-							</el-button>
-							<el-button type="info" plain @click="redirectToProject"
-								>Отмена
-							</el-button>
+							<div class="buttons">
+								<el-button
+									type="success"
+									native-type="submit"
+									:loading="isSubmitting"
+								>
+									Изменить
+								</el-button>
+								<el-button type="info" plain @click="redirectToProject"
+									>Отмена
+								</el-button>
+								<el-button
+									type="danger"
+									plain
+									@click="deleteTask"
+									class="button--delete"
+									:loading="isSubmitting"
+									>Удалить
+								</el-button>
+							</div>
 						</form>
 					</el-card>
 				</el-col>
@@ -112,6 +122,20 @@ export default {
 					})
 				})
 		},
+		deleteTask() {
+			this.$store
+				.dispatch(taskActionTypes.deleteTask, { taskId: this.taskId })
+				.then(() => {
+					this.$message({
+						message: 'Задача успешно удалена',
+						type: 'success',
+					})
+					this.$router.push({
+						name: 'project',
+						params: { projectId: this.projectId },
+					})
+				})
+		},
 	},
 	mounted() {
 		this.$store
@@ -144,5 +168,14 @@ export default {
 .input {
 	margin-bottom: 10px;
 	width: 100%;
+}
+
+.buttons {
+	display: flex;
+	align-items: center;
+}
+
+.button--delete {
+	margin-left: auto;
 }
 </style>
