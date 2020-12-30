@@ -1,7 +1,7 @@
 import axios from '@/api/axios'
 
-const getTasks = () => {
-	return axios.get('/tasks')
+const getTasks = (projectId) => {
+	return axios.get(`/tasks?filter=project_id:${projectId}`)
 }
 
 const getTask = (taskId) => {

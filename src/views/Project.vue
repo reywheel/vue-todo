@@ -31,7 +31,7 @@
 						</el-select>
 					</div>
 				</div>
-				<TaskList :filter="value" />
+				<TaskList :projectId="this.id" :filter="value" />
 			</template>
 			<template v-else> произошла ошибка</template>
 		</template>

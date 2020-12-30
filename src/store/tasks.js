@@ -64,11 +64,11 @@ const mutations = {
 }
 
 const actions = {
-	[actionTypes.getTasks]({ commit }) {
+	[actionTypes.getTasks]({ commit }, { projectId }) {
 		return new Promise((resolve) => {
 			commit(mutationTypes.getTasksStart)
 			tasksApi
-				.getTasks()
+				.getTasks(projectId)
 				.then((response) => {
 					commit(mutationTypes.getTasksSuccess, response.data)
 					resolve()

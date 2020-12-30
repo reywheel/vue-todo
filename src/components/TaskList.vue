@@ -43,8 +43,8 @@ export default {
 	name: 'TaskList',
 	components: { Loader },
 	props: {
-		id: {
-			required: false,
+		projectId: {
+			required: true,
 			type: Number,
 		},
 		filter: {
@@ -102,7 +102,7 @@ export default {
 		},
 	},
 	mounted() {
-		this.$store.dispatch(actionTypes.getTasks)
+		this.$store.dispatch(actionTypes.getTasks, { projectId: this.projectId })
 	},
 }
 </script>
