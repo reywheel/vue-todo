@@ -44,10 +44,7 @@ export default {
 						message: 'Проект успешно создан',
 						type: 'success',
 					})
-					this.$router.push({ name: 'project', params: { id: newProject.id } })
-				})
-				.then(() => {
-					this.$store.dispatch(projectsActionTypes.getProjects)
+					this.$emit('projectCreated', newProject)
 				})
 		},
 	},

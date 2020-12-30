@@ -25,7 +25,16 @@
 							@change="onDone(task.id, task.is_done)"
 							class="task__checkbox"
 						></el-checkbox>
-						<el-button icon="el-icon-edit" circle></el-button>
+						<el-button
+							icon="el-icon-edit"
+							circle
+							@click="
+								$router.push({
+									name: 'editTask',
+									params: { projectId, taskId: task.id },
+								})
+							"
+						></el-button>
 					</div>
 				</div>
 			</template>

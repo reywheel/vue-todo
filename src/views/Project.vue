@@ -31,7 +31,7 @@
 						</el-select>
 					</div>
 				</div>
-				<TaskList :projectId="this.id" :filter="value" />
+				<TaskList :projectId="this.projectId" :filter="value" />
 			</template>
 			<template v-else> произошла ошибка</template>
 		</template>
@@ -49,7 +49,7 @@ export default {
 	name: 'Project',
 	components: { TaskList, Loader },
 	props: {
-		id: {
+		projectId: {
 			required: true,
 			type: Number,
 		},
@@ -87,11 +87,13 @@ export default {
 	},
 	methods: {
 		getProject() {
-			this.$store.dispatch(actionTypes.getProject, { projectId: this.id })
+			this.$store.dispatch(actionTypes.getProject, {
+				projectId: this.projectId,
+			})
 		},
 		deleteProject() {
 			this.$store
-				.dispatch(actionTypes.deleteProject, { projectId: this.id })
+				.dispatch(actionTypes.deleteProject, { projectId: this.projectId })
 				.then(() => {
 					this.$store.dispatch(projectsActionTypes.getProjects)
 					this.$message({
@@ -103,12 +105,12 @@ export default {
 		},
 	},
 	watch: {
-		id(newValue, oldValue) {
-			this.getProject()
+		projectId: {
+			handler: function (newValue, oldValue) {
+				this.getProject()
+			},
+			immediate: true,
 		},
-	},
-	mounted() {
-		this.getProject()
 	},
 }
 </script>

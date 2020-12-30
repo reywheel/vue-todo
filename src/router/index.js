@@ -21,10 +21,25 @@ const routes = [
 		component: () => import('@/views/Register'),
 	},
 	{
-		path: '/projects/:id',
+		path: '/projects/:projectId',
 		name: 'project',
 		component: () => import('@/views/Project'),
-		props: (route) => ({ id: Number(route.params.id) }),
+		props: (route) => ({ projectId: Number(route.params.projectId) }),
+	},
+	{
+		path: '/projects/:projectId/tasks/create',
+		name: 'createTask',
+		component: () => import('@/views/CreateTask'),
+		props: (route) => ({ projectId: Number(route.params.projectId) }),
+	},
+	{
+		path: '/projects/:projectId/tasks/:taskId/edit',
+		name: 'editTask',
+		component: () => import('@/views/EditTask'),
+		props: (route) => ({
+			projectId: Number(route.params.projectId),
+			taskId: Number(route.params.taskId),
+		}),
 	},
 ]
 

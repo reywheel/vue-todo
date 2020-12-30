@@ -3,7 +3,7 @@
 		:with-header="false"
 		:visible.sync="isOpen"
 		direction="ltr"
-		:before-close="closeHandler"
+		:before-close="closeDrawer"
 		size="20%"
 	>
 		<template v-if="isLoading">
@@ -12,11 +12,11 @@
 		<template v-else>
 			<li v-if="isEmpty" class="el-menu-item">Нет проектов</li>
 			<el-menu v-else>
-				<div @click="closeHandler">
+				<div @click="closeDrawer">
 					<router-link
 						tag="li"
 						v-for="project of projects"
-						:to="{ name: 'project', params: { id: project.id } }"
+						:to="{ name: 'project', params: { projectId: project.id } }"
 						class="el-menu-item"
 						active-class="is-active"
 					>
@@ -31,7 +31,7 @@
 						<i class="el-icon-plus"></i>
 						<span>Добавить проект</span>
 					</template>
-					<CreateProjectForm @onSubmit="closeHandler" />
+					<CreateProjectForm @projectCreated="redirectToProject" />
 				</el-submenu>
 			</el-menu>
 		</template>
@@ -39,7 +39,10 @@
 </template>
 
 <script>
-import { getterTypes } from '@/store/projects'
+import {
+	actionTypes as projectsActionTypes,
+	getterTypes,
+} from '@/store/projects'
 import { mapGetters } from 'vuex'
 import AppLoader from '@/components/Loader'
 import CreateProjectForm from '@/components/CreateProjectForm'
@@ -64,8 +67,16 @@ export default {
 		}),
 	},
 	methods: {
-		closeHandler() {
+		closeDrawer() {
 			this.$emit('close')
+		},
+		redirectToProject(newProject) {
+			this.closeDrawer()
+			this.$router.push({
+				name: 'project',
+				params: { projectId: newProject.id },
+			})
+			this.$store.dispatch(projectsActionTypes.getProjects)
 		},
 	},
 }

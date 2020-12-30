@@ -36,6 +36,17 @@
 					</router-link>
 				</template>
 				<template v-if="isAuth">
+					<router-link
+						v-if="$route.name === 'project'"
+						tag="li"
+						class="el-menu-item"
+						active-class="is-active"
+						:to="{
+							name: 'createTask',
+							params: { projectId: this.$route.params.projectId },
+						}"
+						>Создать задачу</router-link
+					>
 					<li class="el-menu-item" @click="logout">Выйти</li>
 				</template>
 			</ul>

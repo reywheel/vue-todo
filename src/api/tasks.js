@@ -8,6 +8,10 @@ const getTask = (taskId) => {
 	return axios.get(`/tasks/${taskId}`)
 }
 
+const createTask = (taskData) => {
+	return axios.post('/tasks', taskData)
+}
+
 const editTask = (taskId, taskData) => {
 	return axios.put(`/tasks/${taskId}`, taskData)
 }
@@ -15,5 +19,6 @@ const editTask = (taskId, taskData) => {
 export default {
 	getTasks,
 	getTask,
+	createTask,
 	editTask,
 }
