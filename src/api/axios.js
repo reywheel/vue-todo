@@ -12,4 +12,8 @@ instance.interceptors.request.use((config) => {
 	return config
 })
 
+export function addErrorHandler(func) {
+	instance.interceptors.response.use((response) => response, func)
+}
+
 export default instance

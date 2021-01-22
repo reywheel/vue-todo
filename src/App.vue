@@ -1,5 +1,6 @@
 <template>
 	<el-container>
+		<AppAlert />
 		<el-header>
 			<AppHeader @clickOpenButton="toggleDrawer" />
 		</el-header>
@@ -13,6 +14,7 @@
 <script>
 import AppHeader from '@/components/Header'
 import AppDrawer from '@/components/Drawer'
+import AppAlert from '@/components/Alert'
 import { actionTypes as authActionTypes } from '@/store/auth'
 import { actionTypes as projectsActionTypes } from '@/store/projects'
 
@@ -20,6 +22,7 @@ export default {
 	components: {
 		AppHeader,
 		AppDrawer,
+		AppAlert,
 	},
 	data() {
 		return {

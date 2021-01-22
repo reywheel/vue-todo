@@ -1,7 +1,9 @@
 import axios from '@/api/axios'
 
 const getProjects = () => {
-	return axios.get('/projects')
+	return axios.get('/projects', {
+		appAlert: 'Не удалось загрузить проекты',
+	})
 }
 
 const createProject = (projectData) => {
